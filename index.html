@@ -39,13 +39,14 @@
             font-weight: 400;
             color: #414651;
             padding: 4px 16px;
-            border-radius: 6px;
             cursor: pointer;
-            transition: background-color 0.2s, font-weight 0.1s;
+            transition: border-bottom 0.2s, font-weight 0.1s;
             user-select: none;
             display: flex;
             align-items: center;
             justify-content: center;
+            border-bottom: 2px solid transparent;
+            height: 100%;
         }
 
         .nav-item svg {
@@ -57,11 +58,11 @@
         }
 
         .nav-item:hover {
-            background-color: #E9E8EB;
+            border-bottom-color: #414651;
         }
 
         .nav-item.selected {
-            background-color: #E9E8EB;
+            border-bottom-color: #414651;
             font-weight: 500;
         }
 
