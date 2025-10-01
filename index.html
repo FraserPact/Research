@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecommerce Competitor Research</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            background: #f5f5f5;
+        }
+
+        /* Top Navigation */
+        .top-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: white;
+            border-bottom: 1px solid #D5D7DA;
+            display: flex;
+            align-items: center;
+            padding-left: 16px;
+            gap: 8px;
+            z-index: 100;
+        }
+
+        .nav-item {
+            font-size: 14px;
+            font-weight: 400;
+            color: #414651;
+            padding: 4px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s, font-weight 0.1s;
+            user-select: none;
+        }
+
+        .nav-item:hover {
+            background-color: #E9E8EB;
+        }
+
+        .nav-item.selected {
+            background-color: #E9E8EB;
+            font-weight: 600;
+        }
+
+        .nav-separator {
+            width: 1px;
+            height: 24px;
+            background: #D5D7DA;
+            margin: 0 8px;
+        }
+
+        /* Left Sidebar */
+        .left-sidebar {
+            position: fixed;
+            top: 60px;
+            left: 0;
+            width: 200px;
+            bottom: 0;
+            background: white;
+            border-right: 1px solid #D5D7DA;
+            padding: 16px;
+            overflow-y: auto;
+            z-index: 99;
+        }
+
+        .sidebar-section {
+            margin-bottom: 24px;
+        }
+
+        .sidebar-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: #666;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .brand-pill {
+            display: inline-flex;
+            align-items: center;
+            font-size: 14px;
+            padding: 2px 2px 2px 9px;
+            margin: 4px 4px 4px 0;
+            border: 1px solid #D5D7DA;
+            border-radius: 6px;
+            cursor: pointer;
+            background: white;
+            transition: background-color 0.2s;
+            user-select: none;
+        }
+
+        .brand-pill:hover {
+            background-color: #E9E8EB;
+        }
+
+        .brand-pill.selected {
+            background-color: #E9E8EB;
+            font-weight: 600;
+        }
+
+        .brand-pill.selector-mode {
+            padding: 2px;
+        }
+
+        .brand-pill .close-btn {
+            margin-left: 6px;
+            padding: 2px 4px;
+            cursor: pointer;
+            font-size: 16px;
+            color: #666;
+            line-height: 1;
+        }
+
+        .brand-pill .close-btn:hover {
+            color: #000;
+        }
+
+        .reset-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 14px;
+            padding: 4px 12px;
+            border: 1px solid #D5D7DA;
+            border-radius: 6px;
+            background: white;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: background-color 0.2s;
+        }
+
+        .reset-button:hover {
+            background-color: #E9E8EB;
+        }
+
+        .reset-icon {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Workspace */
+        .workspace {
+            position: fixed;
+            top: 60px;
+            left: 200px;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+            background: #f5f5f5;
+        }
+
+        .workspace-canvas {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            cursor: grab;
+            overflow: hidden;
+        }
+
+        .workspace-canvas.grabbing {
+            cursor: grabbing;
+        }
+
+        .workspace-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform-origin: 0 0;
+            display: flex;
+            flex-wrap: wrap;
+            padding: 40px;
+            gap: 40px;
+            align-content: flex-start;
+        }
+
+        .screenshot-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .screenshot-header {
+            padding: 12px 16px;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .screenshot-image {
+            width: 200px;
+            height: auto;
+            display: block;
+            object-fit: cover;
+        }
+
+        .screenshot-image.mobile {
+            width: 160px;
+        }
+
+        /* Zoom Controls */
+        .zoom-controls {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            gap: 8px;
+            background: white;
+            border: 1px solid #D5D7DA;
+            border-radius: 8px;
+            padding: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            z-index: 101;
+        }
+
+        .zoom-button {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s;
+        }
+
+        .zoom-button:hover {
+            background-color: #E9E8EB;
+        }
+
+        .zoom-level {
+            padding: 0 12px;
+            display: flex;
+            align-items: center;
+            font-size: 13px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Navigation -->
+    <div class="top-nav">
+        <div class="nav-item" data-mode="all">All</div>
+        <div class="nav-item" data-mode="brand">Brand</div>
+        <div class="nav-separator"></div>
+        <div class="nav-item selected" data-device="desktop">Desktop</div>
+        <div class="nav-item" data-device="mobile">Mobile</div>
+        <div class="nav-separator"></div>
+        <div class="nav-item selected" data-page="homepage">Homepage</div>
+        <div class="nav-item" data-page="nav">Nav</div>
+        <div class="nav-item" data-page="pdp">PDP</div>
+        <div class="nav-item" data-page="addtobag">Add to Bag</div>
+        <div class="nav-item" data-page="cart">Cart</div>
+        <div class="nav-item" data-page="checkout">Checkout</div>
+    </div>
+
+    <!-- Left Sidebar -->
+    <div class="left-sidebar">
+        <div class="sidebar-section">
+            <div class="sidebar-title">Brand Filter</div>
+            <div id="brandList"></div>
+            <button class="reset-button" id="resetBtn">
+                <svg class="reset-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+                </svg>
+                Reset
+            </button>
+        </div>
+    </div>
+
+    <!-- Workspace -->
+    <div class="workspace">
+        <div class="workspace-canvas" id="canvas">
+            <div class="workspace-content" id="content"></div>
+        </div>
+    </div>
+
+    <!-- Zoom Controls -->
+    <div class="zoom-controls">
+        <button class="zoom-button" id="zoomOut">−</button>
+        <div class="zoom-level" id="zoomLevel">100%</div>
+        <button class="zoom-button" id="zoomIn">+</button>
+        <button class="zoom-button" id="zoomReset" title="Reset Zoom">⊙</button>
+    </div>
+
+    <script>
+        // State
+        const state = {
+            mode: 'all', // 'all' or 'brand'
+            device: 'desktop', // 'desktop' or 'mobile'
+            page: 'homepage',
+            selectedBrand: 'alo',
+            brands: [
+                'alo', 'bonobos', 'everlane', 'faherty', 'gap', 'jcrew',
+                'jennikayne', 'lululemon', 'madewell', 'marinelayer', 'nike',
+                'onrunning', 'outdoorvoices', 'quince', 'skims', 'trueclassic', 'comfrt'
+            ],
+            visibleBrands: [],
+            zoom: 1,
+            pan: { x: 0, y: 0 }
+        };
+
+        // Page mapping (for file names)
+        const pageMap = {
+            'homepage': 'Home',
+            'nav': 'Nav',
+            'pdp': 'PDP',
+            'addtobag': 'Add To Bag',
+            'cart': 'Cart',
+            'checkout': 'Checkout'
+        };
+
+        // Initialize
+        function init() {
+            state.visibleBrands = [...state.brands];
+            renderBrandList();
+            renderContent();
+            attachEventListeners();
+        }
+
+        // Render brand list in sidebar
+        function renderBrandList() {
+            const brandList = document.getElementById('brandList');
+            const isSelectorMode = state.mode === 'brand';
+
+            brandList.innerHTML = state.visibleBrands.map(brand => {
+                const isSelected = state.mode === 'brand' && state.selectedBrand === brand;
+                const pillClass = `brand-pill ${isSelected ? 'selected' : ''} ${isSelectorMode ? 'selector-mode' : ''}`;
+                const closeBtn = !isSelectorMode ? `<span class="close-btn" data-brand="${brand}">×</span>` : '';
+
+                return `<div class="${pillClass}" data-brand="${brand}">${capitalize(brand)}${closeBtn}</div>`;
+            }).join('');
+        }
+
+        // Render workspace content
+        function renderContent() {
+            const content = document.getElementById('content');
+
+            if (state.mode === 'all') {
+                // Show all visible brands for selected page
+                content.innerHTML = state.visibleBrands.map(brand =>
+                    createScreenshotCard(brand, state.page, state.device)
+                ).join('');
+            } else if (state.mode === 'brand') {
+                // Show all pages for selected brand
+                const pages = ['homepage', 'nav', 'pdp', 'addtobag', 'cart', 'checkout'];
+                content.innerHTML = pages.map(page =>
+                    createScreenshotCard(state.selectedBrand, page, state.device)
+                ).join('');
+            }
+
+            updateZoom();
+        }
+
+        // Create screenshot card HTML
+        function createScreenshotCard(brand, page, device) {
+            const pageName = pageMap[page];
+            const deviceCapitalized = capitalize(device);
+            const imagePath = `All Images/${pageName} - ${capitalize(brand)} - ${deviceCapitalized}.png`;
+            const imageWidth = device === 'desktop' ? 200 : 160;
+
+            return `
+                <div class="screenshot-card">
+                    <div class="screenshot-header">${capitalize(brand)} - ${pageName}</div>
+                    <img src="${imagePath}" alt="${brand} ${pageName}" class="screenshot-image ${device}"
+                         onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22${imageWidth}%22 height=%22400%22%3E%3Crect fill=%22%23f0f0f0%22 width=%22${imageWidth}%22 height=%22400%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22%23999%22 font-family=%22Arial%22%3EImage not found%3C/text%3E%3C/svg%3E'">
+                </div>
+            `;
+        }
+
+        // Capitalize helper
+        function capitalize(str) {
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        }
+
+        // Event listeners
+        function attachEventListeners() {
+            // Top nav - mode selection
+            document.querySelectorAll('[data-mode]').forEach(item => {
+                item.addEventListener('click', (e) => {
+                    const mode = e.target.dataset.mode;
+                    state.mode = mode;
+
+                    // Update nav items
+                    document.querySelectorAll('[data-mode]').forEach(i => i.classList.remove('selected'));
+                    e.target.classList.add('selected');
+
+                    // When switching to brand mode, deselect page items
+                    if (mode === 'brand') {
+                        document.querySelectorAll('[data-page]').forEach(i => i.classList.remove('selected'));
+                    } else {
+                        // When switching to all mode, select current page
+                        document.querySelector(`[data-page="${state.page}"]`).classList.add('selected');
+                    }
+
+                    renderBrandList();
+                    renderContent();
+                });
+            });
+
+            // Top nav - device selection
+            document.querySelectorAll('[data-device]').forEach(item => {
+                item.addEventListener('click', (e) => {
+                    state.device = e.target.dataset.device;
+                    document.querySelectorAll('[data-device]').forEach(i => i.classList.remove('selected'));
+                    e.target.classList.add('selected');
+                    renderContent();
+                });
+            });
+
+            // Top nav - page selection
+            document.querySelectorAll('[data-page]').forEach(item => {
+                item.addEventListener('click', (e) => {
+                    const page = e.target.dataset.page;
+                    state.page = page;
+
+                    // Switch to 'all' mode when page is selected
+                    if (state.mode === 'brand') {
+                        state.mode = 'all';
+                        document.querySelectorAll('[data-mode]').forEach(i => i.classList.remove('selected'));
+                        document.querySelector('[data-mode="all"]').classList.add('selected');
+                    }
+
+                    document.querySelectorAll('[data-page]').forEach(i => i.classList.remove('selected'));
+                    e.target.classList.add('selected');
+                    renderBrandList();
+                    renderContent();
+                });
+            });
+
+            // Brand list - brand selection and deletion
+            document.getElementById('brandList').addEventListener('click', (e) => {
+                const pill = e.target.closest('.brand-pill');
+                const closeBtn = e.target.closest('.close-btn');
+
+                if (closeBtn) {
+                    // Delete brand
+                    e.stopPropagation();
+                    const brand = closeBtn.dataset.brand;
+                    state.visibleBrands = state.visibleBrands.filter(b => b !== brand);
+                    renderBrandList();
+                    renderContent();
+                } else if (pill && state.mode === 'brand') {
+                    // Select brand in brand mode
+                    const brand = pill.dataset.brand;
+                    state.selectedBrand = brand;
+                    renderBrandList();
+                    renderContent();
+                }
+            });
+
+            // Reset button
+            document.getElementById('resetBtn').addEventListener('click', () => {
+                state.visibleBrands = [...state.brands];
+                renderBrandList();
+                renderContent();
+            });
+
+            // Zoom controls
+            document.getElementById('zoomIn').addEventListener('click', () => {
+                state.zoom = Math.min(state.zoom * 1.2, 5);
+                updateZoom();
+            });
+
+            document.getElementById('zoomOut').addEventListener('click', () => {
+                state.zoom = Math.max(state.zoom / 1.2, 0.1);
+                updateZoom();
+            });
+
+            document.getElementById('zoomReset').addEventListener('click', () => {
+                state.zoom = 1;
+                state.pan = { x: 0, y: 0 };
+                updateZoom();
+            });
+
+            // Pan & drag functionality
+            const canvas = document.getElementById('canvas');
+            let isPanning = false;
+            let startPan = { x: 0, y: 0 };
+
+            canvas.addEventListener('mousedown', (e) => {
+                // Don't pan if clicking on an image
+                if (e.target.tagName === 'IMG') return;
+
+                isPanning = true;
+                startPan = {
+                    x: e.clientX - state.pan.x,
+                    y: e.clientY - state.pan.y
+                };
+                canvas.classList.add('grabbing');
+            });
+
+            document.addEventListener('mousemove', (e) => {
+                if (!isPanning) return;
+
+                state.pan.x = e.clientX - startPan.x;
+                state.pan.y = e.clientY - startPan.y;
+                updateZoom();
+            });
+
+            document.addEventListener('mouseup', () => {
+                isPanning = false;
+                canvas.classList.remove('grabbing');
+            });
+
+            // Zoom with mouse wheel
+            canvas.addEventListener('wheel', (e) => {
+                e.preventDefault();
+
+                const delta = e.deltaY > 0 ? 0.9 : 1.1;
+                const newZoom = Math.max(0.1, Math.min(5, state.zoom * delta));
+
+                // Zoom towards mouse position
+                const rect = canvas.getBoundingClientRect();
+                const mouseX = e.clientX - rect.left;
+                const mouseY = e.clientY - rect.top;
+
+                const zoomRatio = newZoom / state.zoom;
+                state.pan.x = mouseX - (mouseX - state.pan.x) * zoomRatio;
+                state.pan.y = mouseY - (mouseY - state.pan.y) * zoomRatio;
+                state.zoom = newZoom;
+
+                updateZoom();
+            }, { passive: false });
+        }
+
+        // Update zoom and pan transform
+        function updateZoom() {
+            const content = document.getElementById('content');
+            content.style.transform = `translate(${state.pan.x}px, ${state.pan.y}px) scale(${state.zoom})`;
+            document.getElementById('zoomLevel').textContent = `${Math.round(state.zoom * 100)}%`;
+        }
+
+        // Initialize app
+        init();
+    </script>
+</body>
+</html>

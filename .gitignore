@@ -1,0 +1,7 @@
+node_modules/
+brands/
+screenshots/
+output/
+shots/
+.DS_Store
+*.log
