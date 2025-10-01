@@ -57,32 +57,14 @@
             padding: 4px 8px;
         }
 
-        /* Mode and Device selectors - background style */
-        .nav-item[data-mode]:hover,
-        .nav-item[data-device]:hover {
-            background-color: #E9E8EB;
-        }
-
-        .nav-item[data-mode].selected,
-        .nav-item[data-device].selected {
+        /* All nav items - background style */
+        .nav-item:hover {
             background-color: #E9E8EB;
             font-weight: 500;
         }
 
-        /* Page selectors - underline style */
-        .nav-item[data-page] {
-            border-radius: 0;
-            border-bottom: 2px solid transparent;
-            height: 100%;
-        }
-
-        .nav-item[data-page]:hover {
-            border-bottom-color: #A8A8AA;
-            font-weight: 500;
-        }
-
-        .nav-item[data-page].selected {
-            border-bottom-color: #A8A8AA;
+        .nav-item.selected {
+            background-color: #E9E8EB;
             font-weight: 500;
         }
 
