@@ -39,14 +39,13 @@
             font-weight: 400;
             color: #414651;
             padding: 4px 16px;
+            border-radius: 6px;
             cursor: pointer;
-            transition: border-bottom 0.2s, font-weight 0.1s;
+            transition: background-color 0.2s, font-weight 0.1s, border-bottom 0.2s;
             user-select: none;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-bottom: 2px solid transparent;
-            height: 100%;
         }
 
         .nav-item svg {
@@ -57,11 +56,30 @@
             padding: 4px 8px;
         }
 
-        .nav-item:hover {
+        /* Mode and Device selectors - background style */
+        .nav-item[data-mode]:hover,
+        .nav-item[data-device]:hover {
+            background-color: #E9E8EB;
+        }
+
+        .nav-item[data-mode].selected,
+        .nav-item[data-device].selected {
+            background-color: #E9E8EB;
+            font-weight: 500;
+        }
+
+        /* Page selectors - underline style */
+        .nav-item[data-page] {
+            border-radius: 0;
+            border-bottom: 2px solid transparent;
+            height: 100%;
+        }
+
+        .nav-item[data-page]:hover {
             border-bottom-color: #414651;
         }
 
-        .nav-item.selected {
+        .nav-item[data-page].selected {
             border-bottom-color: #414651;
             font-weight: 500;
         }
