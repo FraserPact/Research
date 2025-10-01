@@ -43,6 +43,13 @@
             cursor: pointer;
             transition: background-color 0.2s, font-weight 0.1s;
             user-select: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-item svg {
+            display: block;
         }
 
         .nav-item:hover {
@@ -263,8 +270,19 @@
         <div class="nav-item" data-mode="all">All</div>
         <div class="nav-item" data-mode="brand">Brand</div>
         <div class="nav-separator"></div>
-        <div class="nav-item selected" data-device="desktop">Desktop</div>
-        <div class="nav-item" data-device="mobile">Mobile</div>
+        <div class="nav-item selected" data-device="desktop">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                <line x1="8" y1="21" x2="16" y2="21"></line>
+                <line x1="12" y1="17" x2="12" y2="21"></line>
+            </svg>
+        </div>
+        <div class="nav-item" data-device="mobile">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+                <line x1="12" y1="18" x2="12.01" y2="18"></line>
+            </svg>
+        </div>
         <div class="nav-separator"></div>
         <div class="nav-item selected" data-page="homepage">Homepage</div>
         <div class="nav-item" data-page="nav">Nav</div>
