@@ -91,7 +91,7 @@
         .brand-pill {
             display: inline-flex;
             align-items: center;
-            font-size: 14px;
+            font-size: 12px;
             padding: 2px 2px 2px 9px;
             margin: 4px 4px 4px 0;
             border: 1px solid #D5D7DA;
@@ -187,20 +187,24 @@
         }
 
         .screenshot-card {
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            overflow: hidden;
+            position: relative;
             display: flex;
             flex-direction: column;
         }
 
         .screenshot-header {
-            padding: 12px 16px;
-            border-bottom: 1px solid #e0e0e0;
-            font-size: 14px;
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            padding: 8px 12px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 6px;
+            font-size: 13px;
             font-weight: 500;
             color: #333;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            z-index: 10;
+            pointer-events: none;
         }
 
         .screenshot-image {
@@ -208,6 +212,8 @@
             height: auto;
             display: block;
             object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
 
         .screenshot-image.mobile {
@@ -494,19 +500,18 @@
 
             // Pan & drag functionality
             const canvas = document.getElementById('canvas');
+            const content = document.getElementById('content');
             let isPanning = false;
             let startPan = { x: 0, y: 0 };
 
             canvas.addEventListener('mousedown', (e) => {
-                // Don't pan if clicking on an image
-                if (e.target.tagName === 'IMG') return;
-
                 isPanning = true;
                 startPan = {
                     x: e.clientX - state.pan.x,
                     y: e.clientY - state.pan.y
                 };
                 canvas.classList.add('grabbing');
+                content.style.pointerEvents = 'none';
             });
 
             document.addEventListener('mousemove', (e) => {
@@ -520,6 +525,7 @@
             document.addEventListener('mouseup', () => {
                 isPanning = false;
                 canvas.classList.remove('grabbing');
+                content.style.pointerEvents = 'auto';
             });
 
             // Zoom with mouse wheel
