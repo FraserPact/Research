@@ -313,6 +313,7 @@
             <div class="nav-item" data-page="addtobag">Add to Bag</div>
             <div class="nav-item" data-page="cart">Cart</div>
             <div class="nav-item" data-page="checkout">Checkout</div>
+            <div class="nav-item" data-page="footer">Footer</div>
         </div>
     </div>
 
@@ -369,7 +370,8 @@
             'pdp': 'PDP',
             'addtobag': 'Add To Bag',
             'cart': 'Cart',
-            'checkout': 'Checkout'
+            'checkout': 'Checkout',
+            'footer': 'Footer'
         };
 
         // Initialize
@@ -405,7 +407,7 @@
                 ).join('');
             } else if (state.mode === 'brand') {
                 // Show all pages for selected brand
-                const pages = ['homepage', 'nav', 'pdp', 'addtobag', 'cart', 'checkout'];
+                const pages = ['homepage', 'nav', 'pdp', 'addtobag', 'cart', 'checkout', 'footer'];
                 content.innerHTML = pages.map(page =>
                     createScreenshotCard(state.selectedBrand, page, state.device)
                 ).join('');
