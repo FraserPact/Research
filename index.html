@@ -107,11 +107,17 @@
             margin-bottom: 24px;
         }
 
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
         .sidebar-title {
             font-size: 12px;
             font-weight: 600;
             color: #666;
-            margin-bottom: 12px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
@@ -154,17 +160,17 @@
         }
 
         .reset-button {
-            display: inline-flex;
+            display: flex;
             align-items: center;
-            gap: 6px;
-            font-size: 14px;
-            padding: 4px 12px;
-            border: 1px solid #D5D7DA;
-            border-radius: 6px;
-            background: white;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            border: none;
+            background: transparent;
             cursor: pointer;
-            margin-top: 8px;
+            border-radius: 4px;
             transition: background-color 0.2s;
+            padding: 0;
         }
 
         .reset-button:hover {
@@ -172,8 +178,9 @@
         }
 
         .reset-icon {
-            width: 16px;
-            height: 16px;
+            width: 18px;
+            height: 18px;
+            color: #666;
         }
 
         /* Workspace */
@@ -320,14 +327,15 @@
     <!-- Left Sidebar -->
     <div class="left-sidebar">
         <div class="sidebar-section">
-            <div class="sidebar-title">Brand Filter</div>
+            <div class="sidebar-header">
+                <div class="sidebar-title">Brand Filter</div>
+                <button class="reset-button" id="resetBtn">
+                    <svg class="reset-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+                    </svg>
+                </button>
+            </div>
             <div id="brandList"></div>
-            <button class="reset-button" id="resetBtn">
-                <svg class="reset-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
-                </svg>
-                Reset
-            </button>
         </div>
     </div>
 
