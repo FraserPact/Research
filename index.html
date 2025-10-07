@@ -101,6 +101,49 @@
             padding: 16px;
             overflow-y: auto;
             z-index: 99;
+            transition: width 300ms ease, padding 300ms ease;
+        }
+
+        .left-sidebar.collapsed {
+            width: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .sidebar-toggle {
+            position: fixed;
+            top: 60px;
+            left: 204px;
+            width: 32px;
+            height: 32px;
+            background: white;
+            border: 1px solid #D5D7DA;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 100;
+            transition: left 300ms ease, background-color 0.2s;
+        }
+
+        .sidebar-toggle:hover {
+            background-color: #E9E8EB;
+        }
+
+        .sidebar-toggle.collapsed {
+            left: 12px;
+        }
+
+        .sidebar-toggle svg {
+            width: 20px;
+            height: 20px;
+            color: #666;
+            transition: transform 300ms ease;
+        }
+
+        .sidebar-toggle.collapsed svg {
+            transform: rotate(180deg);
         }
 
         .sidebar-section {
@@ -192,6 +235,11 @@
             bottom: 0;
             overflow: hidden;
             background: #f5f5f5;
+            transition: left 300ms ease;
+        }
+
+        .workspace.sidebar-collapsed {
+            left: 0;
         }
 
         .workspace-canvas {
@@ -324,8 +372,15 @@
         </div>
     </div>
 
+    <!-- Sidebar Toggle Button -->
+    <button class="sidebar-toggle" id="sidebarToggle">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
+    </button>
+
     <!-- Left Sidebar -->
-    <div class="left-sidebar">
+    <div class="left-sidebar" id="sidebar">
         <div class="sidebar-section">
             <div class="sidebar-header">
                 <div class="sidebar-title">Brand Filter</div>
@@ -340,7 +395,7 @@
     </div>
 
     <!-- Workspace -->
-    <div class="workspace">
+    <div class="workspace" id="workspace">
         <div class="workspace-canvas" id="canvas">
             <div class="workspace-content" id="content"></div>
         </div>
@@ -530,6 +585,17 @@
                 state.visibleBrands = [...state.brands];
                 renderBrandList();
                 renderContent();
+            });
+
+            // Sidebar toggle
+            document.getElementById('sidebarToggle').addEventListener('click', () => {
+                const sidebar = document.getElementById('sidebar');
+                const toggle = document.getElementById('sidebarToggle');
+                const workspace = document.getElementById('workspace');
+
+                sidebar.classList.toggle('collapsed');
+                toggle.classList.toggle('collapsed');
+                workspace.classList.toggle('sidebar-collapsed');
             });
 
             // Zoom controls
