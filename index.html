@@ -495,7 +495,7 @@
         function createScreenshotCard(brand, page, device) {
             const pageName = pageMap[page];
             const deviceCapitalized = capitalize(device);
-            const imagePath = `All Images/${pageName} - ${capitalize(brand)} - ${deviceCapitalized}.png`;
+            const imagePath = `All Images/${pageName} - ${getBrandForFilePath(brand)} - ${deviceCapitalized}.png`;
             const imageWidth = device === 'desktop' ? 200 : 160;
 
             // Show brand name in 'all' mode, page name in 'brand' mode
@@ -510,12 +510,17 @@
             `;
         }
 
-        // Capitalize helper
+        // Capitalize helper - for display only
         function capitalize(str) {
             // Check if brand has custom display name
             if (state.brandDisplayNames && state.brandDisplayNames[str]) {
                 return state.brandDisplayNames[str];
             }
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        }
+
+        // Get brand name for file paths - always returns simple capitalized version
+        function getBrandForFilePath(str) {
             return str.charAt(0).toUpperCase() + str.slice(1);
         }
 
