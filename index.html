@@ -426,6 +426,13 @@
                 'jennikayne', 'lululemon', 'madewell', 'marinelayer', 'nike',
                 'onrunning', 'outdoorvoices', 'quince', 'skims', 'trueclassic', 'comfrt'
             ],
+            brandDisplayNames: {
+                'jcrew': 'J. Crew',
+                'onrunning': 'On Running',
+                'marinelayer': 'Marine Layer',
+                'outdoorvoices': 'Outdoor Voices',
+                'trueclassic': 'True Classic'
+            },
             visibleBrands: [],
             zoom: 1,
             pan: { x: 0, y: 0 }
@@ -505,6 +512,10 @@
 
         // Capitalize helper
         function capitalize(str) {
+            // Check if brand has custom display name
+            if (state.brandDisplayNames && state.brandDisplayNames[str]) {
+                return state.brandDisplayNames[str];
+            }
             return str.charAt(0).toUpperCase() + str.slice(1);
         }
 
