@@ -433,6 +433,14 @@
                 'outdoorvoices': 'Outdoor Voices',
                 'trueclassic': 'True Classic'
             },
+            brandFileNames: {
+                'jcrew': 'Jcrew',
+                'onrunning': 'Onrunning',
+                'marinelayer': 'Marinelayer',
+                'outdoorvoices': 'Outdoorvoices',
+                'trueclassic': 'Trueclassic',
+                'jennikayne': 'Jennikayne'
+            },
             visibleBrands: [],
             zoom: 1,
             pan: { x: 0, y: 0 }
@@ -519,8 +527,12 @@
             return str.charAt(0).toUpperCase() + str.slice(1);
         }
 
-        // Get brand name for file paths - always returns simple capitalized version
+        // Get brand name for file paths - uses mapping for special cases
         function getBrandForFilePath(str) {
+            // Check if brand has custom file name
+            if (state.brandFileNames && state.brandFileNames[str]) {
+                return state.brandFileNames[str];
+            }
             return str.charAt(0).toUpperCase() + str.slice(1);
         }
 
